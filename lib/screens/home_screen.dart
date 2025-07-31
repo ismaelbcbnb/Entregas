@@ -24,7 +24,8 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
       backgroundColor: Colors.white,
       appBar: AppBar(
         backgroundColor: Color(0xFFA6193C),
-        title: Text(
+        title:
+        Text(
           'Entregas',
           style: TextStyle(
             color: Colors.white,
@@ -33,7 +34,8 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
           ),
         ),
         iconTheme: IconThemeData(color: Colors.white),
-        bottom: TabBar(
+        bottom:
+        TabBar(
           controller: _tabController,
           labelColor: Colors.white,
           unselectedLabelColor: Colors.white70,

@@ -335,7 +335,7 @@ class ContagemCard extends StatelessWidget {
                 IconButton(
                   icon: Icon(
                     contagem.entregue ? Icons.class_ : Icons.class_outlined,
-                    color: contagem.entregue ? Colors.green : Colors.grey,
+                    color: contagem.entregue ? Color(0xFF004b2c) : Colors.grey,
                   ),
                   onPressed: () => _entregarContagem(context),
                   tooltip: contagem.entregue ? 'Devolver' : 'Entregar',
@@ -345,7 +345,7 @@ class ContagemCard extends StatelessWidget {
                     contagem.validado
                         ? Icons.check_circle
                         : Icons.check_circle_outline,
-                    color: contagem.validado ? Colors.green : Colors.grey,
+                    color: contagem.validado ? Color(0xFF004b2c) : Colors.grey,
                   ),
                   onPressed: () => _validarContagem(context),
                   tooltip: contagem.validado ? 'Invalidar' : 'Validar',
@@ -392,7 +392,7 @@ class ContagemCard extends StatelessWidget {
                     children: <TextSpan>[
                       TextSpan(
                         text: contagem.numContagem.toString(),
-                        style: TextStyle(color: Colors.blue),
+                        style: TextStyle(color: Color(0xFF1d97b7)),
                         recognizer: TapGestureRecognizer()
                           ..onTap = () => _launchURL(contagem.link),
                       ),
