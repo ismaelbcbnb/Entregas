@@ -196,7 +196,7 @@ class _MesesTabState extends State<MesesTab> {
                   title: Text(
                     mes.mesAno,
                     style: TextStyle(
-                      color: Color(0xFFA6193C),
+                      color: Color(0xFF646464),
                       fontWeight: FontWeight.bold,
                     ),
                   ),
@@ -204,7 +204,7 @@ class _MesesTabState extends State<MesesTab> {
                     spacing: 8,
                     children: [
                       IconButton(
-                        icon: Icon(Icons.edit, color: Color(0xFFA6193C)),
+                        icon: Icon(Icons.edit, color: Color(0xFF646464)),
                         onPressed: () => _editarMes(mes),
                       ),
                       IconButton(

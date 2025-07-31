@@ -18,7 +18,7 @@ class ContagensTab extends StatefulWidget {
 class _ContagensTabState extends State<ContagensTab> {
   late Future<List<Contagem>> _contagensFuture;
   String filtroMes = 'Todos os meses';
-  String filtroSistema = 'Todos os sist.';
+  String filtroSistema = 'Todos os sistemas';
 
   @override
   void initState() {
@@ -36,7 +36,7 @@ class _ContagensTabState extends State<ContagensTab> {
     return contagens.where((c) {
       final filtroMesOk = filtroMes == 'Todos os meses' || c.mes == filtroMes;
       final filtroSistemaOk =
-          filtroSistema == 'Todos os sist.' || c.sistema == filtroSistema;
+          filtroSistema == 'Todos os sistemas' || c.sistema == filtroSistema;
       return filtroMesOk && filtroSistemaOk;
     }).toList();
   }
@@ -59,7 +59,7 @@ class _ContagensTabState extends State<ContagensTab> {
             ...{...contagens.map((c) => c.mes)},
           ];
           final sistemas = [
-            'Todos os sist.',
+            'Todos os sistemas',
             ...{...contagens.map((c) => c.sistema)},
           ];
           final contagensFiltradas = _filtrarContagens(contagens);
@@ -73,6 +73,7 @@ class _ContagensTabState extends State<ContagensTab> {
                     Expanded(
                       child: DropdownButton<String>(
                         dropdownColor: Colors.white,
+                        style: TextStyle(color: Color(0xFF646464)),
                         value: filtroMes,
                         isExpanded: true,
                         items: meses
@@ -89,6 +90,7 @@ class _ContagensTabState extends State<ContagensTab> {
                     Expanded(
                       child: DropdownButton<String>(
                         dropdownColor: Colors.white,
+                        style: TextStyle(color: Color(0xFF646464)),
                         value: filtroSistema,
                         isExpanded: true,
                         items: sistemas
@@ -97,7 +99,7 @@ class _ContagensTabState extends State<ContagensTab> {
                         )
                             .toList(),
                         onChanged: (value) => setState(
-                              () => filtroSistema = value ?? 'Todos os sist.',
+                              () => filtroSistema = value ?? 'Todos os sistemas',
                         ),
                       ),
                     ),
@@ -111,7 +113,7 @@ class _ContagensTabState extends State<ContagensTab> {
                       onPressed: () {
                         setState(() {
                           filtroMes = 'Todos os meses';
-                          filtroSistema = 'Todos os sist.';
+                          filtroSistema = 'Todos os sistemas';
                         });
                       },
                       child: Icon(Icons.clear, color: Colors.white),
@@ -133,7 +135,7 @@ class _ContagensTabState extends State<ContagensTab> {
                           style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
                           children: [
                             TextSpan(
-                              text: '${contagensFiltradas.fold(0, (sum, c) => sum + c.pontosDeFuncao)}',
+                              text: '${contagensFiltradas.fold<double>(0, (sum, c) => sum + c.pontosDeFuncao)}',
                               style: TextStyle(color: Color(0xFFA6193C), fontWeight: FontWeight.bold),
                             ),
                           ],
@@ -145,7 +147,7 @@ class _ContagensTabState extends State<ContagensTab> {
                           style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
                           children: [
                             TextSpan(
-                              text: '${contagensFiltradas.where((c) => c.entregue).fold<int>(0, (sum, c) => sum + c.pontosDeFuncao)}',
+                              text: '${contagensFiltradas.where((c) => c.entregue).fold<double>(0, (sum, c) => sum + c.pontosDeFuncao)}',
                               style: TextStyle(color: Color(0xFFA6193C), fontWeight: FontWeight.bold),
                             ),
                           ],
@@ -157,7 +159,7 @@ class _ContagensTabState extends State<ContagensTab> {
                           style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
                           children: [
                             TextSpan(
-                              text: '${contagensFiltradas.where((c) => c.validado).fold<int>(0, (sum, c) => sum + c.pontosDeFuncao)}',
+                              text: '${contagensFiltradas.where((c) => c.validado).fold<double>(0, (sum, c) => sum + c.pontosDeFuncao)}',
                               style: TextStyle(color: Color(0xFFA6193C), fontWeight: FontWeight.bold),
                             ),
                           ],
@@ -245,7 +247,7 @@ class _ContagensTabState extends State<ContagensTab> {
                     TextFormField(
                       controller: numContagemController,
                       decoration: InputDecoration(
-                        labelText: 'Número da Contagem',
+                        labelText: 'Número da Entrega',
                       ),
                       keyboardType: TextInputType.number,
                     ),
@@ -254,7 +256,7 @@ class _ContagensTabState extends State<ContagensTab> {
                       decoration: InputDecoration(
                         labelText: 'Pontos de Função',
                       ),
-                      keyboardType: TextInputType.number,
+                      keyboardType: TextInputType.numberWithOptions(decimal: true),
                     ),
                     DropdownButtonFormField<String>(
                       value: sistema,
@@ -303,7 +305,7 @@ class _ContagensTabState extends State<ContagensTab> {
                           "numContagem":
                           int.tryParse(numContagemController.text) ?? 0,
                           "pontosDeFuncao":
-                          int.tryParse(pontosDeFuncaoController.text) ?? 0,
+                          double.tryParse(pontosDeFuncaoController.text.replaceAll(',', '.')) ?? 0.0,
                           "sistema": sistema,
                           "validado": false,
                           "entregue": false,

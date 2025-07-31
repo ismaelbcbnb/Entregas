@@ -2,7 +2,7 @@ class Contagem {
   final int idContagem;
   final int numCard;
   final int numContagem;
-  final int pontosDeFuncao;
+  final double pontosDeFuncao;
   final String sistema;
   final bool validado;
   final bool entregue;
@@ -26,7 +26,9 @@ class Contagem {
       idContagem: json['idContagem'] ?? 0,
       numCard: json['numCard'] ?? 0,
       numContagem: json['numContagem'] ?? 0,
-      pontosDeFuncao: json['pontosDeFuncao'] ?? 0,
+      pontosDeFuncao: (json['pontosDeFuncao'] is int)
+          ? (json['pontosDeFuncao'] as int).toDouble()
+          : (json['pontosDeFuncao'] ?? 0.0).toDouble(),
       sistema: json['sistema'] ?? '',
       validado: json['validado'] ?? false,
       entregue: json['entregue'] ?? false,
@@ -53,7 +55,7 @@ class Contagem {
     int? idContagem,
     int? numCard,
     int? numContagem,
-    int? pontosDeFuncao,
+    double? pontosDeFuncao,
     String? sistema,
     bool? validado,
     bool? entregue,

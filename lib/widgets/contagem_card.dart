@@ -146,7 +146,7 @@ class ContagemCard extends StatelessWidget {
                       TextFormField(
                         controller: numContagemController,
                         decoration: InputDecoration(
-                          labelText: 'Número da Contagem',
+                          labelText: 'Número da Entrega',
                         ),
                         keyboardType: TextInputType.number,
                         validator: (value) => value == null || value.isEmpty
@@ -283,6 +283,7 @@ class ContagemCard extends StatelessWidget {
       context: context,
       builder: (BuildContext dialogContext) {
         return AlertDialog(
+          backgroundColor: Colors.white,
           title: Text('Confirmar exclusão'),
           content: Text(
             'Deseja realmente excluir a contagem ${contagem.numContagem}?',
