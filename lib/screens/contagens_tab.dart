@@ -116,7 +116,7 @@ class _ContagensTabState extends State<ContagensTab> {
                           filtroSistema = 'Todos os sistemas';
                         });
                       },
-                      child: Icon(Icons.clear, color: Colors.white),
+                      child: Icon(Icons.filter_alt_off, color: Colors.white),
                     ),
                   ],
                 ),
