@@ -39591,7 +39591,7 @@ if(r.$2(a,j)>0){s[b]=j
 b=o}}s[b]=a}}
 A.Kk.prototype={
 I(a){var s=null
-return new A.yH(new A.xW(s),"Meu App CRUD",A.u1(s,s,B.jQ,s),s)}}
+return new A.yH(new A.xW(s),"Entregas",A.u1(s,s,B.jQ,s),s)}}
 A.e8.prototype={
 iJ(){var s=this
 return A.an(["idContagem",s.a,"numCard",s.b,"numContagem",s.c,"pontosDeFuncao",s.d,"sistema",s.e,"validado",s.f,"entregue",s.r,"link",s.w,"mes",s.x],t.N,t.z)}}
