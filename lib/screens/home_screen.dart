@@ -24,29 +24,37 @@ class _HomeScreenState extends State<HomeScreen>
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: PreferredSize(
-        preferredSize: const Size.fromHeight(120),
+        preferredSize: const Size.fromHeight(140),
         child: SafeArea(
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
               Container(
-                color: Colors.white,
+                color: Color(0xFFF5F5F5),
                 padding: const EdgeInsets.only(
-                  top: 24,
+                  top: 12,
                   left: 16,
                   right: 16,
-                  bottom: 12,
+                  bottom: 4,
                 ),
-                alignment: Alignment.centerLeft,
-                child: Center(
-                  child: Text(
-                    'Entregas',
-                    style: const TextStyle(
-                      color: Color(0xFFF68B1F),
-                      fontWeight: FontWeight.bold,
-                      fontSize: 24,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    SizedBox(
+                      width: 76,
+                      height: 76,
+                      child: Image.asset('assets/images/package.png'),
                     ),
-                  ),
+                    const SizedBox(width: 12),
+                    // const Text(
+                    //   'Entregas',
+                    //   style: TextStyle(
+                    //     color: Color(0xFFF68B1F),
+                    //     fontWeight: FontWeight.bold,
+                    //     fontSize: 26,
+                    //   ),
+                    // ),
+                  ],
                 ),
               ),
               Container(

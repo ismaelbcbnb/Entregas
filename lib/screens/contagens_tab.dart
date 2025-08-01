@@ -262,7 +262,7 @@ class _ContagensTabState extends State<ContagensTab> {
                       value: sistema,
                       dropdownColor: Colors.white,
                       decoration: InputDecoration(labelText: 'Sistema'),
-                      items: ['S627', 'S033']
+                      items: ['S627', 'S033', 'S079']
                           .map(
                             (s) => DropdownMenuItem(value: s, child: Text(s)),
                       )

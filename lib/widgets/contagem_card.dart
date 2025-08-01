@@ -88,7 +88,7 @@ class ContagemCard extends StatelessWidget {
       text: contagem.pontosDeFuncao.toString(),
     );
     final linkController = TextEditingController(text: contagem.link);
-    String sistema = contagem.sistema == 'S033' ? 'S033' : 'S627';
+    String sistema = contagem.sistema;
     String? mesSelecionado = contagem.mes;
 
     showModalBottomSheet(
@@ -167,7 +167,7 @@ class ContagemCard extends StatelessWidget {
                         value: sistema,
                         dropdownColor: Colors.white,
                         decoration: InputDecoration(labelText: 'Sistema'),
-                        items: ['S627', 'S033']
+                        items: ['S627', 'S033', 'S079']
                             .map(
                               (s) => DropdownMenuItem(value: s, child: Text(s)),
                             )
