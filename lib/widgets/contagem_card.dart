@@ -66,13 +66,13 @@ class ContagemCard extends StatelessWidget {
     if (response.statusCode == 200 || response.statusCode == 204) {
       Navigator.of(context).pop();
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Contagem atualizada com sucesso')),
+        SnackBar(content: Text('Entrega atualizada com sucesso')),
       );
       onAtualizar();
     } else {
       ScaffoldMessenger.of(
         context,
-      ).showSnackBar(SnackBar(content: Text('Erro ao atualizar contagem')));
+      ).showSnackBar(SnackBar(content: Text('Erro ao atualizar entrega')));
     }
   }
 
@@ -125,7 +125,7 @@ class ContagemCard extends StatelessWidget {
                     children: [
                       Center(
                         child: Text(
-                          'Atualizar Contagem',
+                          'Atualizar Entrega',
                           style: TextStyle(
                             fontSize: 18,
                             fontWeight: FontWeight.bold,

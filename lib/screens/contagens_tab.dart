@@ -19,6 +19,8 @@ class _ContagensTabState extends State<ContagensTab> {
   late Future<List<Contagem>> _contagensFuture;
   String filtroMes = 'Todos os meses';
   String filtroSistema = 'Todos os sistemas';
+  String filtroEntregue = 'Entregues/A entregar';
+  String filtroValidado = 'Validadas/A validar';
 
   @override
   void initState() {
@@ -37,8 +39,23 @@ class _ContagensTabState extends State<ContagensTab> {
       final filtroMesOk = filtroMes == 'Todos os meses' || c.mes == filtroMes;
       final filtroSistemaOk =
           filtroSistema == 'Todos os sistemas' || c.sistema == filtroSistema;
-      return filtroMesOk && filtroSistemaOk;
+      final filtroEntregueOk = filtroEntregue == 'Entregues/A entregar' ||
+          (filtroEntregue == 'Entregues' && c.entregue) ||
+          (filtroEntregue == 'A entregar' && !c.entregue);
+      final filtroValidadoOk = filtroValidado == 'Validadas/A validar' ||
+          (filtroValidado == 'Validadas' && c.validado) ||
+          (filtroValidado == 'A validar' && !c.validado);
+      return filtroMesOk && filtroSistemaOk && filtroEntregueOk && filtroValidadoOk;
     }).toList();
+  }
+
+  void _limparFiltros() {
+    setState(() {
+      filtroMes = 'Todos os meses';
+      filtroSistema = 'Todos os sistemas';
+      filtroEntregue = 'Entregues/A entregar';
+      filtroValidado = 'Validadas/A validar';
+    });
   }
 
   @override
@@ -51,7 +68,7 @@ class _ContagensTabState extends State<ContagensTab> {
           if (snapshot.connectionState == ConnectionState.waiting)
             return Center(child: CircularProgressIndicator());
           if (snapshot.hasError)
-            return Center(child: Text('Erro ao carregar contagens'));
+            return Center(child: Text('Erro ao carregar entregas'));
           final contagens = snapshot.data ?? [];
 
           final meses = [
@@ -77,9 +94,7 @@ class _ContagensTabState extends State<ContagensTab> {
                         value: filtroMes,
                         isExpanded: true,
                         items: meses
-                            .map(
-                              (m) => DropdownMenuItem(value: m, child: Text(m)),
-                        )
+                            .map((m) => DropdownMenuItem(value: m, child: Text(m)))
                             .toList(),
                         onChanged: (value) => setState(
                               () => filtroMes = value ?? 'Todos os meses',
@@ -94,12 +109,93 @@ class _ContagensTabState extends State<ContagensTab> {
                         value: filtroSistema,
                         isExpanded: true,
                         items: sistemas
-                            .map(
-                              (s) => DropdownMenuItem(value: s, child: Text(s)),
-                        )
+                            .map((s) => DropdownMenuItem(value: s, child: Text(s)))
                             .toList(),
                         onChanged: (value) => setState(
                               () => filtroSistema = value ?? 'Todos os sistemas',
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 8),
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: DropdownButton<String>(
+                        dropdownColor: Colors.white,
+                        style: TextStyle(color: Color(0xFF646464)),
+                        value: filtroEntregue,
+                        isExpanded: true,
+                        items: [
+                          'Entregues/A entregar',
+                          'Entregues',
+                          'A entregar',
+                        ]
+                            .map((e) => DropdownMenuItem(value: e, child: Text(e)))
+                            .toList(),
+                        onChanged: (value) => setState(
+                              () => filtroEntregue = value ?? 'Entregues/A entregar',
+                        ),
+                      ),
+                    ),
+                    SizedBox(width: 8),
+                    Expanded(
+                      child: DropdownButton<String>(
+                        dropdownColor: Colors.white,
+                        style: TextStyle(color: Color(0xFF646464)),
+                        value: filtroValidado,
+                        isExpanded: true,
+                        items: [
+                          'Validadas/A validar',
+                          'Validadas',
+                          'A validar',
+                        ]
+                            .map((e) => DropdownMenuItem(value: e, child: Text(e)))
+                            .toList(),
+                        onChanged: (value) => setState(
+                              () => filtroValidado = value ?? 'Validadas/A validar',
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(right: 8, top: 4, bottom: 8, left: 8),
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: Card(
+                        color: Color(0xFFF5F5F5),
+                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                          child: Center(
+                            child: Text.rich(
+                              TextSpan(
+                                text: 'Quantidade de entregas: ',
+                                style: TextStyle(
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 16,
+                                ),
+                                children: [
+                                  TextSpan(
+                                    text: '${contagensFiltradas.length}',
+                                    style: TextStyle(
+                                      color: Color(0xFFA6193C),
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 16,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              textAlign: TextAlign.center,
+                            ),
+                          ),
                         ),
                       ),
                     ),
@@ -107,15 +203,12 @@ class _ContagensTabState extends State<ContagensTab> {
                     ElevatedButton(
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Color(0xFFA6193C),
-                        shape: CircleBorder(),
-                        padding: EdgeInsets.all(8),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                        padding: EdgeInsets.all(12),
                       ),
-                      onPressed: () {
-                        setState(() {
-                          filtroMes = 'Todos os meses';
-                          filtroSistema = 'Todos os sistemas';
-                        });
-                      },
+                      onPressed: _limparFiltros,
                       child: Icon(Icons.filter_alt_off, color: Colors.white),
                     ),
                   ],
@@ -155,7 +248,7 @@ class _ContagensTabState extends State<ContagensTab> {
                       ),
                       Text.rich(
                         TextSpan(
-                          text: 'Validados: ',
+                          text: 'Validadas: ',
                           style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
                           children: [
                             TextSpan(
@@ -165,13 +258,13 @@ class _ContagensTabState extends State<ContagensTab> {
                           ],
                         ),
                       ),
-
                     ],
                   ),
                 ),
               ),
               Expanded(
                 child: ListView(
+                  padding: const EdgeInsets.only(bottom: 72),
                   children: contagensFiltradas
                       .map(
                         (contagem) => ContagemCard(
@@ -184,14 +277,26 @@ class _ContagensTabState extends State<ContagensTab> {
                       .toList(),
                 ),
               ),
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 16),
+                child: Center(
+                  child: ElevatedButton.icon(
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Color(0xFFA6193C),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      padding: EdgeInsets.symmetric(horizontal: 24, vertical: 16),
+                    ),
+                    onPressed: () => _mostrarModalAdicionarContagem(context),
+                    icon: Icon(Icons.add, color: Colors.white),
+                    label: Text('Adicionar Entrega', style: TextStyle(color: Colors.white)),
+                  ),
+                ),
+              ),
             ],
           );
         },
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () => _mostrarModalAdicionarContagem(context),
-        backgroundColor: Color(0xFFA6193C),
-        child: Icon(Icons.add, color: Colors.white),
       ),
     );
   }
@@ -200,9 +305,7 @@ class _ContagensTabState extends State<ContagensTab> {
     final _formKey = GlobalKey<FormState>();
     final TextEditingController numCardController = TextEditingController();
     final TextEditingController numContagemController = TextEditingController();
-    final TextEditingController pontosDeFuncaoController =
-    TextEditingController();
-    final TextEditingController linkController = TextEditingController();
+    final TextEditingController pontosDeFuncaoController = TextEditingController();
     String sistema = 'S627';
     String? mesSelecionado;
 
@@ -233,7 +336,7 @@ class _ContagensTabState extends State<ContagensTab> {
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     Text(
-                      'Adicionar Contagem',
+                      'Adicionar Entrega',
                       style: TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.bold,
@@ -270,10 +373,6 @@ class _ContagensTabState extends State<ContagensTab> {
                       onChanged: (value) =>
                           setModalState(() => sistema = value ?? 'S627'),
                     ),
-                    TextFormField(
-                      controller: linkController,
-                      decoration: InputDecoration(labelText: 'Link'),
-                    ),
                     DropdownButtonFormField<String>(
                       dropdownColor: Colors.white,
                       decoration: InputDecoration(labelText: 'Mês'),
@@ -300,16 +399,16 @@ class _ContagensTabState extends State<ContagensTab> {
                           );
                           return;
                         }
+                        final baseUrl = 'https://s2clmg01/ccm/web/projects/%5BPA%5D%20Gest%C3%A3o%20de%20Contratos#action=com.ibm.team.workitem.viewWorkItem&id=';
+                        final numEntrega = numContagemController.text.trim();
                         final contagemJson = {
                           "numCard": int.tryParse(numCardController.text) ?? 0,
-                          "numContagem":
-                          int.tryParse(numContagemController.text) ?? 0,
-                          "pontosDeFuncao":
-                          double.tryParse(pontosDeFuncaoController.text.replaceAll(',', '.')) ?? 0.0,
+                          "numContagem": int.tryParse(numContagemController.text) ?? 0,
+                          "pontosDeFuncao": double.tryParse(pontosDeFuncaoController.text.replaceAll(',', '.')) ?? 0.0,
                           "sistema": sistema,
                           "validado": false,
                           "entregue": false,
-                          "link": linkController.text,
+                          "link": '$baseUrl$numEntrega',
                           "mes": mesSelecionado,
                         };
                         final response = await http.post(

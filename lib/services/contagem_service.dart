@@ -10,7 +10,7 @@ class ContagemService {
       final List<dynamic> data = jsonDecode(response.body);
       return data.map((json) => Contagem.fromJson(json)).toList();
     } else {
-      throw Exception('Erro ao buscar contagens');
+      throw Exception('Erro ao buscar Entregas');
     }
   }
 

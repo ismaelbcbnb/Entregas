@@ -46,14 +46,6 @@ class _HomeScreenState extends State<HomeScreen>
                       child: Image.asset('assets/images/package.png'),
                     ),
                     const SizedBox(width: 12),
-                    // const Text(
-                    //   'Entregas',
-                    //   style: TextStyle(
-                    //     color: Color(0xFFF68B1F),
-                    //     fontWeight: FontWeight.bold,
-                    //     fontSize: 26,
-                    //   ),
-                    // ),
                   ],
                 ),
               ),
@@ -65,7 +57,7 @@ class _HomeScreenState extends State<HomeScreen>
                   unselectedLabelColor: Colors.white70,
                   indicatorColor: Colors.white,
                   tabs: const [
-                    Tab(text: 'Contagens'),
+                    Tab(text: 'Entregas'),
                     Tab(text: 'Meses'),
                   ],
                 ),
