@@ -29,26 +29,26 @@ class _HomeScreenState extends State<HomeScreen>
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              Container(
-                color: Color(0xFFF5F5F5),
-                padding: const EdgeInsets.only(
-                  top: 12,
-                  left: 16,
-                  right: 16,
-                  bottom: 4,
-                ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    SizedBox(
-                      width: 76,
-                      height: 76,
-                      child: Image.asset('assets/images/package.png'),
-                    ),
-                    const SizedBox(width: 12),
-                  ],
-                ),
-              ),
+              // Container(
+              //   color: Color(0xFFF5F5F5),
+              //   padding: const EdgeInsets.only(
+              //     top: 12,
+              //     left: 16,
+              //     right: 16,
+              //     bottom: 4,
+              //   ),
+              //   child: Row(
+              //     mainAxisAlignment: MainAxisAlignment.center,
+              //     children: [
+              //       SizedBox(
+              //         width: 76,
+              //         height: 76,
+              //         child: Image.asset('assets/images/package.png'),
+              //       ),
+              //       const SizedBox(width: 12),
+              //     ],
+              //   ),
+              // ),
               Container(
                 color: const Color(0xFFA6193C),
                 child: TabBar(

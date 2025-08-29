@@ -70,12 +70,14 @@ class _MesesTabState extends State<MesesTab> {
           _meses.removeWhere((m) => m.idMes == mes.idMes);
         });
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Mês ${mes.mesAno} foi excluído com sucesso.')),
+          SnackBar(
+            content: Text('Mês ${mes.mesAno} foi excluído com sucesso.'),
+          ),
         );
       } else {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Erro ao excluir o mês.')),
-        );
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(SnackBar(content: Text('Erro ao excluir o mês.')));
       }
     }
   }
@@ -111,19 +113,21 @@ class _MesesTabState extends State<MesesTab> {
       );
       if (response.statusCode == 201 || response.statusCode == 200) {
         await _carregarMeses();
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Mês criado com sucesso.')),
-        );
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(SnackBar(content: Text('Mês criado com sucesso.')));
       } else {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Erro ao criar o mês.')),
-        );
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(SnackBar(content: Text('Erro ao criar o mês.')));
       }
     }
   }
 
   Future<void> _editarMes(Mes mes) async {
-    final TextEditingController _controller = TextEditingController(text: mes.mesAno);
+    final TextEditingController _controller = TextEditingController(
+      text: mes.mesAno,
+    );
     final result = await showDialog<bool>(
       context: context,
       builder: (context) => AlertDialog(
@@ -153,13 +157,13 @@ class _MesesTabState extends State<MesesTab> {
       );
       if (response.statusCode == 200 || response.statusCode == 204) {
         await _carregarMeses();
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Mês editado com sucesso.')),
-        );
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(SnackBar(content: Text('Mês editado com sucesso.')));
       } else {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Erro ao editar o mês.')),
-        );
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(SnackBar(content: Text('Erro ao editar o mês.')));
       }
     }
   }
@@ -173,51 +177,60 @@ class _MesesTabState extends State<MesesTab> {
             : _error != null
             ? Center(child: Text(_error!))
             : RefreshIndicator(
-          onRefresh: _carregarMeses,
-          child: _meses.isEmpty
-              ? ListView(
-            children: [
-              Center(
-                child: Padding(
-                  padding: EdgeInsets.all(32),
-                  child: Text('Nenhum mês cadastrado'),
-                ),
-              )
-            ],
-          )
-              : ListView.builder(
-            itemCount: _meses.length,
-            itemBuilder: (context, index) {
-              final mes = _meses[index];
-              return Card(
-                color: Color(0xFFF5F5F5),
-                margin: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                child: ListTile(
-                  title: Text(
-                    mes.mesAno,
-                    style: TextStyle(
-                      color: Color(0xFF646464),
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  trailing: Wrap(
-                    spacing: 8,
-                    children: [
-                      IconButton(
-                        icon: Icon(Icons.edit, color: Color(0xFF646464)),
-                        onPressed: () => _editarMes(mes),
+                onRefresh: _carregarMeses,
+                child: _meses.isEmpty
+                    ? ListView(
+                        children: [
+                          Center(
+                            child: Padding(
+                              padding: EdgeInsets.all(32),
+                              child: Text('Nenhum mês cadastrado'),
+                            ),
+                          ),
+                        ],
+                      )
+                    : ListView.builder(
+                        itemCount: _meses.length,
+                        itemBuilder: (context, index) {
+                          final mes = _meses[index];
+                          return Card(
+                            color: Color(0xFFF5F5F5),
+                            margin: EdgeInsets.symmetric(
+                              horizontal: 16,
+                              vertical: 8,
+                            ),
+                            child: ListTile(
+                              title: Text(
+                                mes.mesAno,
+                                style: TextStyle(
+                                  color: Color(0xFF646464),
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              trailing: Wrap(
+                                spacing: 8,
+                                children: [
+                                  IconButton(
+                                    icon: Icon(
+                                      Icons.edit,
+                                      color: Color(0xFF646464),
+                                    ),
+                                    onPressed: () => _editarMes(mes),
+                                  ),
+                                  IconButton(
+                                    icon: Icon(
+                                      Icons.delete,
+                                      color: Color(0xFFA6193C),
+                                    ),
+                                    onPressed: () => _excluirMes(mes),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          );
+                        },
                       ),
-                      IconButton(
-                        icon: Icon(Icons.delete, color: Color(0xFFA6193C)),
-                        onPressed: () => _excluirMes(mes),
-                      ),
-                    ],
-                  ),
-                ),
-              );
-            },
-          ),
-        ),
+              ),
         Positioned(
           bottom: 16,
           right: 16,

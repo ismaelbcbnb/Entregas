@@ -65,9 +65,9 @@ class ContagemCard extends StatelessWidget {
 
     if (response.statusCode == 200 || response.statusCode == 204) {
       Navigator.of(context).pop();
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Entrega atualizada com sucesso')),
-      );
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text('Entrega atualizada com sucesso')));
       onAtualizar();
     } else {
       ScaffoldMessenger.of(
@@ -323,7 +323,7 @@ class ContagemCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
       color: Color(0xFFF5F5F5),
-      margin: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+      margin: EdgeInsets.symmetric(horizontal: 16, vertical: 4),
       child: Padding(
         padding: const EdgeInsets.all(1.0),
         child: Row(
@@ -357,20 +357,59 @@ class ContagemCard extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    'Card: ${contagem.numCard}',
-                    style: TextStyle(
-                      color: Color(0xFFA6193C),
-                      fontWeight: FontWeight.bold,
+                  Text.rich(
+                    TextSpan(
+                      text: 'Card: ',
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontWeight: FontWeight.bold,
+                      ),
+                      children: [
+                        TextSpan(
+                          text: '${contagem.numCard}',
+                          style: TextStyle(
+                            color: Color(0xFFA6193C),
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ],
                     ),
                   ),
-                  Text(
-                    'Pontos de função: ${contagem.pontosDeFuncao}',
-                    style: TextStyle(fontWeight: FontWeight.bold),
+                  Text.rich(
+                    TextSpan(
+                      text: 'Pontos de função: ',
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontWeight: FontWeight.bold,
+                      ),
+                      children: [
+                        TextSpan(
+                          text: '${contagem.pontosDeFuncao}',
+                          style: TextStyle(
+                            color: Color(0xFFA6193C),
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
-                  Text(
-                    'Mês: ${contagem.mes}',
-                    style: TextStyle(fontWeight: FontWeight.bold),
+                  Text.rich(
+                    TextSpan(
+                      text: 'Mês: ',
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontWeight: FontWeight.bold,
+                      ),
+                      children: [
+                        TextSpan(
+                          text: '${contagem.mes}',
+                          style: TextStyle(
+                            color: Color(0xFFA6193C),
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 ],
               ),
